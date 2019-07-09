@@ -1,6 +1,7 @@
 package com.example.chat.config;
 
 import com.example.chat.dao.UtilizadorDao;
+import com.example.chat.web.Flash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,11 +30,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/css/**");
-    }
-
-    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
@@ -52,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     public AuthenticationFailureHandler loginFailureHandler() {
         return (request, response, exception) -> {
+            request.getSession().setAttribute("flash", new Flash("Utilizador e/ou Password errados", Flash.Status.FAILURE));
             response.sendRedirect("/login");
         };
     }

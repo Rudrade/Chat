@@ -10,6 +10,9 @@
     <title th:text="'Chat | ' + ${page_title}"></title>
 </head>
 <body>
-
+    <div th:fragment="flash" th:if="${flash != null}">
+        <div th:if="${'FAILURE' == flash.status.toString()}" class="alert alert-danger" th:text="${flash.message}"></div>
+        <div th:if="${'SUCCESS' == flash.status.toString()}" class="alert alert-success" th:text="${flash.message}"></div>
+    </div>
 </body>
 </html>
