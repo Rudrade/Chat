@@ -15,7 +15,7 @@ import java.util.List;
  * Created by rui on 09/07/2019
  */
 @Entity
-public class Utilizador implements UserDetails {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,6 +32,10 @@ public class Utilizador implements UserDetails {
     @OneToOne
     @JoinColumn(name = "role_id")
     private Role role;
+
+    @ElementCollection
+    @OneToMany
+    private List<Conversation> conversations;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -84,6 +88,22 @@ public class Utilizador implements UserDetails {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<Conversation> getConversations() {
+        return conversations;
+    }
+
+    public void setConversations(List<Conversation> conversations) {
+        this.conversations = conversations;
     }
 
     @Override

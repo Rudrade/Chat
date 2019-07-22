@@ -3,6 +3,79 @@
 <head th:replace="layout :: head('Chat')">
 </head>
 <body>
+    <div th:replace="layout :: script"></div>
 
+    <div class="container-fluid">
+        <form th:action="@{/}" method="POST">
+            <div class="btn-group-vertical">
+                <button type="button" class="btn btn-secondary" title="Nova conversa" data-toggle="modal" data-target="#addModal">
+                    <i class="material-icons">add</i>
+                </button>
+                <button type="submit" class="btn btn-danger" title="Sair" name="action" value="logout">
+                    <i class="material-icons">exit_to_app</i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal" tabindex="-1" role="dialog" id="addModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nova conversa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div th:replace="layout :: flash"></div>
+                    <form th:action="@{/}" method="POST">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <button type="submit" class="input-group-text" title="Procurar" name="action" value="search">
+                                    <i class="material-icons">search</i>
+                                </button>
+                            </div>
+                            <input class="form-control" type="text" placeholder="Procurar utilizador" aria-label="Search" name="username">
+                        </div>
+                        <script type="text/javascript" th:if="${(user != null) || (flash != null) || (conversationUsers != null)}">
+                            $(document).ready(function(){
+                                $("#addModal").modal('show');
+                            });
+                        </script>
+                        <table class="table" th:if="${user != null}">
+                            <tr>
+                                <td class="row" th:text="${user.username}"></td>
+                                <td>
+                                    <input type="hidden" name="nameUser" th:value="${user.username}">
+                                    <button type="submit" class="btn btn-success" name="action" value="add">
+                                        <i class="material-icons">add</i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table" th:if="${conversationUsers != null}">
+                            <tr>
+                                <th scope="col">Utilizadores</th>
+                            </tr>
+                            <tr th:each="user : ${conversationUsers}">
+                                <td class="row" th:text="${user.username}"></td>
+                                <td>
+                                    <button type="submit" class="btn btn-danger" name="action" value="remove" title="Remover utilizador">
+                                        <i class="material-icons">remove</i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" name="action" value="cancel">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Criar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

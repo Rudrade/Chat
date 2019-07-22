@@ -1,13 +1,12 @@
 package com.example.chat.config;
 
-import com.example.chat.dao.UtilizadorDao;
+import com.example.chat.dao.UserDao;
 import com.example.chat.web.Flash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -22,11 +21,11 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    private UtilizadorDao utilizadorDao;
+    private UserDao userDao;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(utilizadorDao);
+        auth.userDetailsService(userDao);
     }
 
     @Override
@@ -43,12 +42,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     public AuthenticationSuccessHandler loginSuccessHandler() {
-        return (request, response, authentication) -> response.sendRedirect("/");
+        return (request, response, authentication) -> {
+            response.sendRedirect("/");
+        };
     }
 
     public AuthenticationFailureHandler loginFailureHandler() {
         return (request, response, exception) -> {
-            request.getSession().setAttribute("flash", new Flash("Utilizador e/ou Password errados", Flash.Status.FAILURE));
+            request.getSession().setAttribute("flash", new Flash("Utilizador e/ou password errados", Flash.Status.FAILURE));
             response.sendRedirect("/login");
         };
     }

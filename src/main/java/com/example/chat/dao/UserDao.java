@@ -1,6 +1,7 @@
 package com.example.chat.dao;
 
-import com.example.chat.model.Utilizador;
+import com.example.chat.model.Conversation;
+import com.example.chat.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +17,22 @@ import java.util.List;
  */
 
 @Service
-public class UtilizadorDao implements UserDetailsService {
+public class UserDao implements UserDetailsService {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public Utilizador getByUsername(String username) {
+    public List<Conversation> getConversation(User user) {
+        return user.getConversations();
+    }
+
+    public User getByUsername(String username) {
         Session session = sessionFactory.openSession();
-        List<Utilizador> utilizadorList = session.createCriteria(Utilizador.class).list();
+        List<User> userList = session.createCriteria(User.class).list();
         session.close();
 
-        for (Utilizador utilizador : utilizadorList) {
-            if (utilizador.getUsername().equals(username)) {
-                return utilizador;
+        for (User user : userList) {
+            if (user.getUsername().equals(username)) {
+                return user;
             }
         }
 
@@ -36,10 +41,10 @@ public class UtilizadorDao implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Utilizador utilizador = getByUsername(username);
-        if (utilizador == null) {
+        User user = getByUsername(username);
+        if (user == null) {
             throw new UsernameNotFoundException("Utilizador não encontrado");
         }
-        return utilizador;
+        return user;
     }
 }

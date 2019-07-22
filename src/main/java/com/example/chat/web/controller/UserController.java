@@ -14,13 +14,8 @@ import java.util.logging.Logger;
  */
 
 @Controller
-public class UtilizadorController {
+public class UserController {
     private static final Logger LOGGER = Logger.getLogger("com.example.chat.web.controller.UtilizadorController");
-
-    @RequestMapping("/")
-    public String chat() {
-        return "chat";
-    }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model, HttpServletRequest request) {
