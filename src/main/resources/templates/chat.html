@@ -54,25 +54,29 @@
                                 </td>
                             </tr>
                         </table>
-                        <table class="table" th:if="${conversationUsers != null}">
-                            <tr>
-                                <th scope="col">Utilizadores</th>
-                            </tr>
-                            <tr th:each="user : ${conversationUsers}">
-                                <td class="row" th:text="${user.username}"></td>
+                    </form>
+                    <table class="table" th:if="${conversationUsers != null}">
+                        <tr>
+                            <th scope="col">Utilizadores</th>
+                        </tr>
+                        <tr th:each="user : ${conversationUsers}">
+                            <form th:action="@{/}" method="POST">
+                               <td class="row" th:text="${user.username}"></td>
                                 <td>
-                                    <button type="submit" class="btn btn-danger" name="action" value="remove" title="Remover utilizador">
-                                        <i class="material-icons">remove</i>
+                                  <input type="hidden" name="nameUser" th:value="${user.username}">
+                                   <button type="submit" class="btn btn-danger" name="action" value="remove" title="Remover utilizador">
+                                       <i class="material-icons">remove</i>
                                     </button>
                                 </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" name="action" value="cancel">Cancelar</button>
+                            </form>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <form th:action="@{/}" method="POST">
+                        <button type="submit" class="btn btn-secondary" name="action" value="cancel">Cancelar</button>
                         <button type="submit" class="btn btn-primary">Criar</button>
-                        </form>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

@@ -5,7 +5,6 @@ import com.example.chat.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -34,14 +33,20 @@ public class ConversationDao {
         return false;
     }
 
+    public void removeByUsername(String username) {
+        LOGGER.info("REMOVE LIST BEFORE: " + conversation.getUsers());
+        conversation.getUsers().removeIf(user -> user.getUsername().equals(username));
+        LOGGER.info("REMOVE LIST AFTER: " + conversation.getUsers());
+    }
 
     public List<User> getUsers() {
         return new ArrayList<>(conversation.getUsers());
     }
 
-    public void clear() {
-        LOGGER.info("CLEAR LIST: " + conversation.getUsers());
-        conversation = new Conversation();
+    public void cancel() {
+        LOGGER.info("CLEAR LIST BEFORE: " + conversation.getUsers());
+        conversation.getUsers().clear();
+        LOGGER.info("CLEAR LIST AFTER: " + conversation.getUsers());
     }
 
     public ConversationDao() {

@@ -45,6 +45,7 @@ public class ConversationController {
     public String mainPost(RedirectAttributes redirectAttributes, HttpServletRequest request, Principal principal, @RequestParam(required = false) String username, @RequestParam String action, @RequestParam(required = false) String nameUser) throws ServletException {
         LOGGER.info("ACTION: " + action);
         switch (action) {
+
             case "search":
                 User user = userDao.getByUsername(username);
                 LOGGER.info("USER IS NULL: " + (user == null));
@@ -61,15 +62,27 @@ public class ConversationController {
                 }
                 redirectAttributes.addFlashAttribute("conversationUsers", conversationDao.getUsers());
                 break;
+
             case "add":
                 LOGGER.info("nameUser: " + nameUser);
                 conversationDao.addUser(userDao.getByUsername(nameUser));
                 redirectAttributes.addFlashAttribute("conversationUsers", conversationDao.getUsers());
+                redirectAttributes.addFlashAttribute("flash", new Flash("Utilizador adicionado com sucesso", Flash.Status.SUCCESS));
                 LOGGER.info("CONVERSATION USERS:" + conversationDao.getUsers().toString());
                 break;
-            case "cancel":
-                conversationDao.clear();
+
+            case "remove":
+                LOGGER.info("NAME USER: " + nameUser);
+                conversationDao.removeByUsername(nameUser);
+                redirectAttributes.addFlashAttribute("conversationUsers", conversationDao.getUsers());
+                redirectAttributes.addFlashAttribute("flash", new Flash("Utilizador removido com sucesso", Flash.Status.SUCCESS));
                 break;
+
+            case "cancel":
+                request.removeAttribute("conversationUsers");
+                conversationDao.cancel();
+                break;
+
             case "logout":
                 request.logout();
                 break;
