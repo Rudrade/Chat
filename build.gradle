@@ -26,6 +26,13 @@ dependencies {
     compile 'com.h2database:h2:1.4.191'
     compile 'org.springframework.boot:spring-boot-starter-security'
 
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'org.springframework.security:spring-security-test'
+    testCompile 'com.github.springtestdbunit:spring-test-dbunit:1.3.0'
+    testCompile 'org.dbunit:dbunit:2.5.2'
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.apache.httpcomponents:httpclient:4.5.2'
+
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 }

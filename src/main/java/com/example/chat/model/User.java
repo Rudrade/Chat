@@ -115,4 +115,15 @@ public class User implements UserDetails {
                 ", role=" + role.getId() +
                 '}';
     }
+
+    public User(Long id, @NotNull @Size(min = 3, max = 20) String username, @NotNull @Size(min = 8) String password, Role role, List<Conversation> conversations) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.conversations = conversations;
+    }
+
+    public User() {
+    }
 }

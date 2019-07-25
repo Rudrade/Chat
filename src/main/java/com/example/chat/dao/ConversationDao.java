@@ -19,9 +19,7 @@ public class ConversationDao {
     private Conversation conversation;
 
     public void addUser(User user) {
-        LOGGER.info("ADDING USER: " + user.toString());
         conversation.getUsers().add(user);
-        LOGGER.info("ADDING USER LIST: " + conversation.getUsers());
     }
 
     public boolean containsUserByUsername(String username) {
@@ -34,9 +32,7 @@ public class ConversationDao {
     }
 
     public void removeByUsername(String username) {
-        LOGGER.info("REMOVE LIST BEFORE: " + conversation.getUsers());
         conversation.getUsers().removeIf(user -> user.getUsername().equals(username));
-        LOGGER.info("REMOVE LIST AFTER: " + conversation.getUsers());
     }
 
     public List<User> getUsers() {
@@ -44,13 +40,14 @@ public class ConversationDao {
     }
 
     public void cancel() {
-        LOGGER.info("CLEAR LIST BEFORE: " + conversation.getUsers());
         conversation.getUsers().clear();
-        LOGGER.info("CLEAR LIST AFTER: " + conversation.getUsers());
     }
 
     public ConversationDao() {
         conversation = new Conversation();
     }
 
+    public void setConversation(Conversation conversation) {
+        this.conversation = conversation;
+    }
 }

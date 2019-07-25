@@ -31,4 +31,12 @@ public class Role {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Role(Long id, @NotNull String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Role() {
+    }
 }
