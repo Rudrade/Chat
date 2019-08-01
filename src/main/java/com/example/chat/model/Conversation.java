@@ -12,16 +12,17 @@ import java.util.List;
 @Entity
 public class Conversation {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @NotNull
     @ElementCollection
+    @JoinColumn(name = "user_id")
     private List<User> users;
 
     @NotNull
     @ElementCollection
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Message> messages;
 
     public Conversation(Long id, @NotNull List<User> users, @NotNull List<Message> messages) {

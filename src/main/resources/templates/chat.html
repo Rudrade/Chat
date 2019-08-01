@@ -8,12 +8,37 @@
     <div class="container-fluid">
         <form th:action="@{/}" method="POST">
             <div class="btn-group-vertical">
+                <div th:if="${conversations != null}">
+                    <div th:each="conversation : ${conversations}">
+                        <button type="submit" class="btn btn-success" name="action" value="conversation">
+                            <input type="hidden" name="conversationId" th:value="${conversation.id}">
+                            <i class="material-icons" th:title="${conversation.id}">account_box</i>
+                        </button>
+                    </div>
+                </div>
                 <button type="button" class="btn btn-secondary" title="Nova conversa" data-toggle="modal" data-target="#addModal">
                     <i class="material-icons">add</i>
                 </button>
                 <button type="submit" class="btn btn-danger" title="Sair" name="action" value="logout">
                     <i class="material-icons">exit_to_app</i>
                 </button>
+            </div>
+        </form>
+    </div>
+    
+    <div class="container" th:if="${conversation != null}">
+        <div th:each="message : ${conversation.messages}" th:if="${conversation.messages}">
+            <div th:text="${message.message}"></div>
+        </div>
+        <form th:action="@{/message/insert}" method="POST" autocomplete="off">
+            <div class="input-group mb-3">
+                <input type="hidden" name="id" th:value="${conversation.id}">
+                <input type="text" class="form-control" placeholder="Escreva uma mensagem" aria-label="Recipient's username" aria-describedby="button-addon2" name="message">
+                <div class="input-group-append">
+                    <button class="btn btn-light" type="submit" id="button-addon2" title="Enviar">
+                        <i class="material-icons">insert_comment</i>
+                    </button>
+                </div>
             </div>
         </form>
     </div>
@@ -75,7 +100,7 @@
                 <div class="modal-footer">
                     <form th:action="@{/}" method="POST">
                         <button type="submit" class="btn btn-secondary" name="action" value="cancel">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Criar</button>
+                        <button type="submit" class="btn btn-primary" name="action" value="create">Criar</button>
                     </form>
                 </div>
             </div>

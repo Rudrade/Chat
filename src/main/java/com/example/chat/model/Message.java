@@ -44,4 +44,12 @@ public class Message {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public Message(@NotNull User user, @NotNull String message) {
+        this.user = user;
+        this.message = message;
+    }
+
+    public Message() {
+    }
 }

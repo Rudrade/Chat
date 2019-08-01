@@ -160,4 +160,25 @@ public class ConversationControllerTest {
 
         verify(userDao).getConversation(ArgumentMatchers.any(User.class));
     }
+
+    @Test
+    public void mainPost_createConversationSuccess() throws Exception {
+        User u = new User(1L, "user", "password", new Role(1L, "ROLE_USER"), null);
+
+        doReturn(u).when(userDao).getByUsername("user");
+
+        MvcResult result = mockMvc.perform(
+                post("/")
+                    .param("action", "create")
+                    .principal(principal))
+                .andExpect(redirectedUrl("/"))
+                .andReturn();
+
+        Flash flash = (Flash) result.getFlashMap().get("flash");
+
+        assertEquals(Status.SUCCESS, flash.getStatus());
+
+        verify(conversationDao).addUser(ArgumentMatchers.any(User.class));
+        verify(conversationDao).build(ArgumentMatchers.any(User.class));
+    }
 }

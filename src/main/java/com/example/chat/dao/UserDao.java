@@ -21,6 +21,10 @@ public class UserDao implements UserDetailsService {
     @Autowired
     private SessionFactory sessionFactory;
 
+    public void addConversationToUser(User user, Conversation conversation) {
+        user.getConversations().add(conversation);
+    }
+
     public List<Conversation> getConversation(User user) {
         return user.getConversations();
     }
