@@ -85,6 +85,7 @@ public class ConversationController {
             case "conversation":
                 Conversation conversation = conversationDao.getConversationById(Long.valueOf(conversationId));
                 redirectAttributes.addFlashAttribute("conversation", conversation);
+                redirectAttributes.addFlashAttribute("msgUser", userDao.getByUsername(principal.getName()));
                 break;
 
             case "logout":
@@ -100,7 +101,9 @@ public class ConversationController {
         User user = userDao.getByUsername(principal.getName());
 
         conversation = conversationDao.insertMessage(conversation, user, message);
+
         redirectAttributes.addFlashAttribute("conversation", conversation);
+        redirectAttributes.addFlashAttribute("msgUser", user);
         return "redirect:/";
     }
 
