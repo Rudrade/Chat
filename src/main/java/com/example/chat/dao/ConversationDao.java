@@ -4,7 +4,6 @@ import com.example.chat.exception.NotEnoughUsers;
 import com.example.chat.model.Conversation;
 import com.example.chat.model.Message;
 import com.example.chat.model.User;
-import org.aspectj.weaver.ast.Not;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
