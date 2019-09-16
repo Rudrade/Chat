@@ -3,7 +3,8 @@
 # Tecnologias 
 
 - Java
-- Sring
+- Spring Boot
+- Spring Security
 - Hibernate
 - Bootstrap
 - JUnit 4
